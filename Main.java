@@ -123,7 +123,7 @@
             return false; 
         }
         parkingSpots[spotId - 1].parkCar(c);
-        
+        System.out.println("Car parked at spot: " + spotId);
         return true;
     }
     
@@ -135,6 +135,7 @@
         if (!spot.isAvailable()) {
             spot.removeCar();
         availableSpots.add(spotId);
+        System.out.println("Car removed from spot: " + spotId);
         return true;
         }
         return false;
