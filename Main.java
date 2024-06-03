@@ -1,3 +1,4 @@
+ import java.util.Scanner;
  class Car{
     private String licensePlate;
 
@@ -58,27 +59,20 @@
         this.items=new int[capacity];
     }
     public boolean isEmpty(){
-        if(size==0)
-            return true;
-        else
-            return false;
+        return size == 0;
     }
     public boolean isFull(){
-        if(size==capacity)
-            return true;
-        else
-            return false;
+        return size == capacity;
     }
     public boolean add(int item){
         if(isFull()){
             return false;
         }
-        else{
             r=(r+1)%capacity;
             items[r]=item;
             size++;
             return true;
-        }
+        
     }
     public int delete(){
         if(isEmpty()){
@@ -119,23 +113,26 @@
             return false;
         }
         int spotId = availableSpots.delete();
-        if (spotId <= 0 || spotId > capacity) {
+        if (spotId <0 || spotId >= capacity) {
             return false; 
         }
-        parkingSpots[spotId - 1].parkCar(c);
-        System.out.println("Car parked at spot: " + spotId);
+        parkingSpots[spotId].parkCar(c);
+        System.out.println("Car parked at spot: " + (spotId+1));
+        System.out.println();
         return true;
     }
     
     public boolean removeCar(int spotId){
-        if(spotId<1 || spotId>capacity){
+        if(spotId<=0 || spotId>capacity){
+            System.out.println("Enter valid spot id \n");
             return false;
         }
-        Parkingspot spot = parkingSpots[spotId - 1];
+        Parkingspot spot = parkingSpots[spotId-1];
         if (!spot.isAvailable()) {
             spot.removeCar();
-        availableSpots.add(spotId);
+        availableSpots.add(spotId-1);
         System.out.println("Car removed from spot: " + spotId);
+        System.out.println();
         return true;
         }
         return false;
@@ -149,28 +146,50 @@
                 System.out.println("Spot ID: " + spot.getSpotId());
             }
         }
+        System.out.println(4);
 }
  }
  public class Main {
     public static void main(String[] args) {
-        Parkinglot parkingLot = new Parkinglot(10);
+        int ch;
+        Scanner sc=new Scanner(System.in);
+        Parkinglot parkingLot = new Parkinglot(3);
+do{
+        System.out.println("Enter the required operation\n1.Add car \n2.Remove car \n3.Print available space \n4.exit");
+        ch=sc.nextInt();
 
-        Car car1 = new Car("A123");
-        Car car2 = new Car("B789");
-        Car car3 = new Car("C456");
 
-        parkingLot.parkCar(car1);
-        parkingLot.parkCar(car2);
-        parkingLot.parkCar(car3);
-
-        parkingLot.printAvailableSpots();
-
-        parkingLot.removeCar(2);
-        parkingLot.printAvailableSpots();
-
-        parkingLot.parkCar(new Car("D101"));
-        parkingLot.printAvailableSpots();
-    }
+        Car c;
+        switch (ch) {
+            case 1:
+                System.out.println("enter the license no");
+                String no=sc.next();
+                c=new Car(no);
+                parkingLot.parkCar(c);
+                parkingLot.printAvailableSpots();
+                break;
+        
+            case 2:
+                System.out.println("Enter the spot id to remove");
+                int sp=sc.nextInt();
+                parkingLot.removeCar(sp);
+                parkingLot.printAvailableSpots();
+                break;
+        
+            case 3:
+                parkingLot.printAvailableSpots();
+                break;
+        
+            case 4:
+                break;
+        
+            default:
+                System.out.println("enter valid no");
+                break;
+        }
+     
+    }while(ch!=4);
+}
 }
 
 
