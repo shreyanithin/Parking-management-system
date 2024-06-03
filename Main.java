@@ -153,7 +153,7 @@
     public static void main(String[] args) {
         int ch;
         Scanner sc=new Scanner(System.in);
-        Parkinglot parkingLot = new Parkinglot(3);
+        Parkinglot parkingLot = new Parkinglot(10);
 do{
         System.out.println("Enter the required operation\n1.Add car \n2.Remove car \n3.Print available space \n4.exit");
         ch=sc.nextInt();
