@@ -152,13 +152,15 @@ class Parkinglot{
        }
        System.out.println();
    }
-   public String findCar(int spotId){
-       if(spotId<=0 || spotId>capacity){
-           System.out.println( "Enter a valid spot id");
-       }
-       return s[spotId-1];
+   public int findCar(String licensePlate){
+    for (int i = 0; i < parkingSpots.length; i++) {
+        Car car = parkingSpots[i].getcar();
+        if (car != null && car.getLicensePlate().equals(licensePlate)) {
+            return i + 1;
+        }
    }
-}
+   return -1;
+}}
 public class Main {
    public static void main(String[] args) {
     {
@@ -190,16 +192,17 @@ public class Main {
                break;
        
            case 4:
-               System.out.println("Enter the spot id to find car");
-               int find=sc.nextInt();
-               String plate=parkingLot.findCar(find);
-               if (plate != null) {
-                   System.out.println("The car in spot " + find + " is " + plate);
-                   System.out.println();
-               } else {
-                   System.out.println("No car found at spot: " + find);
-                   System.out.println();
-               }
+           System.out.println("Enter the license plate:");
+           String find = sc.next();
+           int spotId = parkingLot.findCar(find);
+           if (spotId != -1) {
+               System.out.println("The car with license plate " + find + " is at spot: " + spotId);
+               System.out.println();
+           } else {
+               System.out.println("No car found with license plate: " + find);
+               System.out.println();
+           }
+          
                break;
        
            case 5:
